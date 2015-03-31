@@ -5,7 +5,9 @@
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
    <bean id="triangle" class="org.mursil.spring.practice.Triangle">
-  	 <property name="type" value="Custom"/>
+
+  	 <constructor-arg index="0" value="Custom"/>
+  	  <constructor-arg index="1" value="20"/>
    </bean>
       
 
