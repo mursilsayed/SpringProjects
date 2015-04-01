@@ -6,6 +6,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -93,10 +94,12 @@ public class Triangle implements ApplicationContextAware,BeanNameAware,Disposabl
 	private List<Point> list;
 	private ApplicationContext context=null;
 
+	@Required
 	public List<Point> getList() {
 		return list;
 	}
 
+	@Required
 	public void setList(List<Point> list) {
 		this.list = list;
 	}

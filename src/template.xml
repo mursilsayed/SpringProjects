@@ -54,4 +54,6 @@
 		<property name="locations" value="points.properties" />
 	</bean>
 	
+	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+	
 </beans>
