@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-public class Triangle implements ApplicationContextAware,BeanNameAware{
+public class Triangle implements ApplicationContextAware,BeanNameAware,DisposableBean,InitializingBean{
 
 //	private String type;
 //	private int height;
@@ -117,5 +119,29 @@ public class Triangle implements ApplicationContextAware,BeanNameAware{
 	public void setBeanName(String beanName) {
 		System.out.println("Bean Name:"+beanName);
 	}
+
+	@Override
+	public void destroy() throws Exception {
+		System.out.println("OnDestroy");
+		
+	}
+	@Override
+	public void afterPropertiesSet() throws Exception
+	{
+		System.out.println("Init-afterPropertiesSet");
+	}
+	
+	
+	
+	public void onDestroy()  {
+		System.out.println("Custom onDestroy");
+		
+	}
+	
+	public void OnInit() 
+	{
+		System.out.println("Custom OnInit");
+	}
+	
 	
 }
