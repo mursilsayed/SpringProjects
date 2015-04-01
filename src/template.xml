@@ -6,22 +6,23 @@
 
    <bean id="triangle" class="org.mursil.spring.practice.Triangle">
   	
-      <property name="point1" ref="pointA">
-      <!-- Referencing a bean via an ID and thus using XML validation to check if an id exists -->
-      	
+      <property name="list">
+	      <list>
+	      	<ref bean="pointA"/>
+	      	 
+	      	<!-- Nested Bean only needed in this class. No need to use ID for the nested bean as it will not be referenced anyewhere else -->
+		  	<bean class="org.mursil.spring.practice.Point">
+			   <property name="x" value="3" />
+			   <property name="y" value="4" />
+	    	</bean>
+	    	
+	    	<!-- Accessing a bean via an alias -->
+	    	<ref bean="pointC-alias"/>
+	       
+	      </list>	
       </property>
       
-  	  <property name="point2" >
-  	  <!-- Nested Bean only needed in this class. No need to use ID for the nested bean as it will not be referenced anyewhere else -->
-	  	<bean class="org.mursil.spring.practice.Point">
-		   <property name="x" value="3" />
-		   <property name="y" value="4" />
-    	</bean>
-  	  </property>
   	  
-  	  <!-- Accessing a bean via an alias -->
-  	  <property name="point3" ref="pointC-alias" />
-   
    </bean>
    
    
