@@ -44,10 +44,14 @@
    
     
     <bean id="pointC" class="org.mursil.spring.practice.Point">
-	   <property name="x" value="5" />
-	   <property name="y" value="6" />
+	   <property name="x" value="${pointC.x}" />
+	   <property name="y" value="${pointC.y}" />
 	</bean>
       
   	<alias name="pointC" alias="pointC-alias" />  
 
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="points.properties" />
+	</bean>
+	
 </beans>

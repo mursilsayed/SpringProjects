@@ -12,7 +12,7 @@ public class DrawingApp {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
 		//Triangle t= new Triangle();
 		
 		//Deprecated Method
