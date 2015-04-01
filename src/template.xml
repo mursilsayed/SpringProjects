@@ -18,6 +18,8 @@
   	  
    </bean>
    
+   <bean id="circle" class ="org.mursil.spring.practice.Circle" scope="prototype"  />
+   
    
    <!-- Practicing Bean Inheritance and adding some members to the list -->
    <bean id="triangle1" class="org.mursil.spring.practice.Triangle" scope="prototype" parent="triangle" >
@@ -37,23 +39,27 @@
    </bean>
    
  	<bean id="pointA" class="org.mursil.spring.practice.Point">
+      <!-- qualifier not working :( need to explore -->
+       <qualifier value="circleRelated" />
 	   <property name="x" value="0" />
 	   <property name="y" value="0" />
 	</bean>
     
    
     
-    <bean id="pointC" class="org.mursil.spring.practice.Point">
+    <bean id="centre" class="org.mursil.spring.practice.Point">
+    	
 	   <property name="x" value="${pointC.x}" />
 	   <property name="y" value="${pointC.y}" />
 	</bean>
       
-  	<alias name="pointC" alias="pointC-alias" />  
+  	<alias name="centre" alias="pointC-alias" />  
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations" value="points.properties" />
 	</bean>
 	
 	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 	
 </beans>

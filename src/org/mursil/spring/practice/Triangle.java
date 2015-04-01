@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-public class Triangle implements ApplicationContextAware,BeanNameAware,DisposableBean,InitializingBean{
+public class Triangle implements Shape,ApplicationContextAware,BeanNameAware,DisposableBean,InitializingBean{
 
 //	private String type;
 //	private int height;
@@ -103,6 +103,8 @@ public class Triangle implements ApplicationContextAware,BeanNameAware,Disposabl
 	public void setList(List<Point> list) {
 		this.list = list;
 	}
+	
+	@Override
 	public void draw(){
 		for(Point p:list){
 			
