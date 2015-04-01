@@ -17,7 +17,7 @@ public class DrawingApp {
 		//Deprecated Method
 		//BeanFactory factory= new XmlBeanFactory(new ClassPathResource("template.xml"));
 		ApplicationContext context= new ClassPathXmlApplicationContext("template.xml");
-		Triangle t = (Triangle)context.getBean("triangle");
+		Triangle t = (Triangle)context.getBean("triangle1");
 		t.draw();
 		
 	}
