@@ -2,7 +2,12 @@ package org.mursil.spring.practice;
 
 import java.util.List;
 
-public class Triangle {
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+public class Triangle implements ApplicationContextAware,BeanNameAware{
 
 //	private String type;
 //	private int height;
@@ -84,6 +89,7 @@ public class Triangle {
 //	}
 	
 	private List<Point> list;
+	private ApplicationContext context=null;
 
 	public List<Point> getList() {
 		return list;
@@ -98,6 +104,18 @@ public class Triangle {
 			System.out.println(p);
 		}
 		
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext context)
+			throws BeansException {
+		this.context= context;
+		
+	}
+
+	@Override
+	public void setBeanName(String beanName) {
+		System.out.println("Bean Name:"+beanName);
 	}
 	
 }
