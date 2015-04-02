@@ -12,8 +12,10 @@ public class AOPApp {
 
 		AbstractApplicationContext context= new ClassPathXmlApplicationContext("spring.xml");
 		context.registerShutdownHook();
+		ShapeService service= context.getBean("shapeService",ShapeService.class);
 		
-		System.out.println(context.getBean("shapeService",ShapeService.class).getCircle().getName());
+		System.out.println(service.getCircle().getName());
+		service.getCircle().setName("Dummy Name");
 		
 		
 	}
