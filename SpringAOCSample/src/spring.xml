@@ -21,10 +21,9 @@
 	
 </bean>
 
-<bean id="loggingAspect" class="org.mursil.spring.practice.aspect.LoggingAspect" />
 
 <!-- For identifying beans which are marked in the code -->
-<context:component-scan base-package="org.mursil.spring.practice.service"></context:component-scan>
+<context:component-scan base-package="org.mursil.spring.practice.service" />
 
 <!-- For all the Annotations that are Marked in the code. e.g. @Autowired,  -->
 <context:annotation-config/>
@@ -32,6 +31,7 @@
 <!-- For enabling Aspect oriented Programing in Spring -->
 <aop:aspectj-autoproxy />
 
+<bean id="loggingAspect" class="org.mursil.spring.practice.aspect.LoggingAspect" />
 
 
 </beans>
