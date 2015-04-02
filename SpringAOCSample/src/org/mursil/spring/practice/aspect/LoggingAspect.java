@@ -1,6 +1,10 @@
 package org.mursil.spring.practice.aspect;
 
+import org.aopalliance.intercept.Joinpoint;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -32,11 +36,24 @@ public class LoggingAspect {
 	
 	@Before("args(name)")
 	public void SetAdvice(String name){
-		System.out.println("SetAdvice Called: "+name);
+	//	System.out.println("SetAdvice Called; Joinpoint= "+join+"; argument="+name);
+		System.out.println("SetAdvice Called; argument="+name);
 		
 	}
 	
 	
+	
+	@AfterReturning(pointcut="args(name)",returning="returnedObject")
+	public void SetAdvice(String name,String returnedObject){
+		System.out.println("SetAdvice Called; Argument= "+name+" ;ReturnedObject= "+returnedObject);
+		
+	}
+	
+	@AfterThrowing(pointcut="args(name)",throwing="ex")
+	public void SetAdvice(String name,Exception ex){
+		System.out.println("SetAdvice Called; Argument= "+name+" ;Exception= "+ex);
+		
+	}
 	
 	
 	

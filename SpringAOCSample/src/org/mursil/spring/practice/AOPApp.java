@@ -15,7 +15,7 @@ public class AOPApp {
 		ShapeService service= context.getBean("shapeService",ShapeService.class);
 		
 		System.out.println(service.getCircle().getName());
-		service.getCircle().setName("Dummy Name");
+		service.getCircle().setNameandReturn("Dummy Name Value");
 		
 		
 	}
