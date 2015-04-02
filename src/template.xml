@@ -71,4 +71,15 @@
 	
 	<context:component-scan base-package="org.mursil.spring.practice"></context:component-scan>
 	
+	<!-- Including class For reading Application Messages from property files  -->
+	<bean id="msgSource" class ="org.springframework.context.support.ResourceBundleMessageSource" >
+		<property name="basenames">
+			<list>
+				<value>applicationmessages</value>
+			</list>
+		
+		</property>
+	</bean>
+	
+	
 </beans>

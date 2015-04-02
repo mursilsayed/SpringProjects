@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,19 @@ public class Circle implements Shape {
 
 	private Point centre;
 	
+	@Autowired
+	private MessageSource msgSource;
+	
+	
+	
+	public MessageSource getMsgSource() {
+		return msgSource;
+	}
+
+	public void setMsgSource(MessageSource msgSource) {
+		this.msgSource = msgSource;
+	}
+
 	public Point getCentre() {
 		return centre;
 	}
@@ -28,7 +42,11 @@ public class Circle implements Shape {
 
 	@Override
 	public void draw() {
-		System.out.println(centre);
+		//System.out.println(this.msgSource.getMessage("greeting",null,"No Message Found",null));
+		
+		System.out.println(this.msgSource.getMessage("interleaved.msg",new Object[]{centre.getX(),centre.getY()},"No Message Found",null));
+		
+		
 		
 	}
 	
