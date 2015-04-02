@@ -2,6 +2,8 @@ package org.mursil.spring.practice;
 
 import java.util.List;
 
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.DisposableBean;
@@ -127,26 +129,31 @@ public class Triangle implements Shape,ApplicationContextAware,BeanNameAware,Dis
 
 	@Override
 	public void destroy() throws Exception {
-		System.out.println("OnDestroy");
+		System.out.println("Triangle:OnDestroy");
 		
 	}
 	@Override
 	public void afterPropertiesSet() throws Exception
 	{
-		System.out.println("Init-afterPropertiesSet");
+		System.out.println("Triangle:Init-afterPropertiesSet");
 	}
 	
 	
 	
 	public void onDestroy()  {
-		System.out.println("Custom onDestroy");
+		System.out.println("Triangle:Custom onDestroy");
 		
 	}
 	
 	public void OnInit() 
 	{
-		System.out.println("Custom OnInit");
+		System.out.println("Triangle:Custom OnInit");
 	}
 	
+	@PreDestroy
+	public void onDestroy2()  {
+		System.out.println("Triangle: @PreDestroy");
+		
+	}
 	
 }

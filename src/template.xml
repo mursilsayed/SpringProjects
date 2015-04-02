@@ -2,8 +2,12 @@
 
  <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" default-init-method="OnInit" default-destroy-method="OnDestroy"    >
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+        
+    default-init-method="OnInit" default-destroy-method="OnDestroy"    >
      
    <bean id="triangle" class="org.mursil.spring.practice.Triangle" scope="prototype" abstract="true" init-method="OnInit" destroy-method="OnDestroy" >
   	
@@ -18,7 +22,8 @@
   	  
    </bean>
    
-   <bean id="circle" class ="org.mursil.spring.practice.Circle" scope="prototype"  />
+   <!--  This Bean is now declared in the code as a Service component. -->
+   <!-- <bean id="circle" class ="org.mursil.spring.practice.Circle" scope="prototype"  /> -->
    
    
    <!-- Practicing Bean Inheritance and adding some members to the list -->
@@ -59,7 +64,11 @@
 		<property name="locations" value="points.properties" />
 	</bean>
 	
-	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
-	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+	<!-- <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" /> -->
+	<context:annotation-config/>
+	
+	
+	<context:component-scan base-package="org.mursil.spring.practice"></context:component-scan>
 	
 </beans>
