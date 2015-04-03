@@ -32,6 +32,16 @@
 <aop:aspectj-autoproxy />
 
 <bean id="loggingAspect" class="org.mursil.spring.practice.aspect.LoggingAspect" />
+<!--  
+ <bean id="xmldefinedaspect" class="org.mursil.spring.practice.aspect.XMLDefinedAspect" />
 
+
+
+<aop:config>
+	<aop:aspect id="xmlaspect" ref="xmldefinedaspect">
+		<aop:around pointcut="execution(* get*())" method="AroundAdviceWithXML"/>	
+	</aop:aspect>
+</aop:config>
+ -->
 
 </beans>

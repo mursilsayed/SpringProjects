@@ -78,5 +78,22 @@ public class LoggingAspect {
 	
 	
 	
+	@Around("@annotation(org.mursil.spring.practice.aspect.Loggable)")
+	public Object AroundAdviceWithCustomAnnotaion(ProceedingJoinPoint point)
+	{
+		Object result =null;
+		try {
+			System.out.println("AroundAdvicewithCustomAnnotation Called before method execution. Method="+point.getSignature());
+			
+			result = point.proceed();
+			
+			System.out.println("AroundAdvicewithCustomAnnotation Called after method execution. Method="+point.getSignature());
+			
+		} catch (Throwable e) {
+			
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

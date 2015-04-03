@@ -14,8 +14,9 @@ public class AOPApp {
 		context.registerShutdownHook();
 		ShapeService service= context.getBean("shapeService",ShapeService.class);
 		
-		System.out.println(service.getCircle().getName());
-		service.getCircle().setNameandReturn("Dummy Name Value");
+		//System.out.println(service.getCircle().getName());
+		//service.getCircle().setNameandReturn("Dummy Name Value");
+		service.getCircle().MethodUsingCustomAnnotation();
 		
 		
 	}
