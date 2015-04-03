@@ -2,9 +2,11 @@ package org.mursil.spring.practice.aspect;
 
 import org.aopalliance.intercept.Joinpoint;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -56,6 +58,23 @@ public class LoggingAspect {
 	}
 	
 	
+	@Around("AllGetters() && AllModels()")
+	public Object AroundAdviceTest(ProceedingJoinPoint point)
+	{
+		Object result =null;
+		try {
+			System.out.println("AroundAdvice Called before method execution. Method="+point.getSignature());
+			
+			result = point.proceed();
+			
+			System.out.println("AroundAdvice Called after method execution. Method="+point.getSignature());
+			
+		} catch (Throwable e) {
+			
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	
 	
