@@ -3,6 +3,7 @@ package org.mursil.hibernate.practice;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,8 +34,12 @@ public class DemoApp {
 //		}
 		
 		UserDetails userDetails = new UserDetails();
-		userDetails.setUserid(1);
+		//userDetails.setUserid(1);
 		userDetails.setUserName("Mursil");
+		userDetails.setAddress("C-104 block 15 Gulistane Johar");
+		userDetails.setDescription("Hello World. Nice Description");
+		userDetails.setJoindate(new Date());
+		
 		
 		@SuppressWarnings("deprecation")
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -43,8 +48,15 @@ public class DemoApp {
 		
 		session.save(userDetails);
 		session.getTransaction().commit();
+		//session.close();
 		
 		
+		//Reading the User Detail from Table
+		UserDetails user ;
+		//session = sessionFactory.openSession();
+		user = (UserDetails)session.get(UserDetails.class, 1);
+		System.out.println("User name="+user.getUserName()+"\n UserID="+user.getUserid());
+		session.close();
 		
 	}
 

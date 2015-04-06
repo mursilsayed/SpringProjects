@@ -11,7 +11,10 @@
         <property name="hibernate.connection.password">sam200</property>
         <property name="hibernate.connection.url">jdbc:mariadb://192.168.59.103:3306/hibernatedb</property>
        
-        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+      <!--   <property name="hibernate.hbm2ddl.auto">create-drop</property>
+       -->
+         <property name="hibernate.hbm2ddl.auto">update</property>
+       
         <property name="hibernate.cache.use_second_level_cache">false</property>
         
         <!-- Names of the Entity Classes -->
