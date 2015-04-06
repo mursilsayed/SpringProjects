@@ -1,0 +1,20 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        
+        <property name="hibernate.connection.driver_class">org.mariadb.jdbc.Driver</property>
+        <property name="hibernate.connection.username">Mursil</property>
+        <property name="hibernate.connection.password">sam200</property>
+        <property name="hibernate.connection.url">jdbc:mariadb://192.168.59.103:3306/hibernatedb</property>
+       
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.cache.use_second_level_cache">false</property>
+        
+        <!-- Names of the Entity Classes -->
+        <mapping class="org.mursil.hibernate.practice.model.UserDetails"/>
+    </session-factory>
+</hibernate-configuration>
