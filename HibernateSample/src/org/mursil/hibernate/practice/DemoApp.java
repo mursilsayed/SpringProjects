@@ -8,6 +8,7 @@ import java.util.Date;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.mursil.hibernate.practice.model.Address;
 import org.mursil.hibernate.practice.model.UserDetails;
 import org.mariadb.jdbc.MySQLConnection;
 
@@ -35,8 +36,14 @@ public class DemoApp {
 		
 		UserDetails userDetails = new UserDetails();
 		//userDetails.setUserid(1);
+		
 		userDetails.setUserName("Mursil");
-		userDetails.setAddress("C-104 block 15 Gulistane Johar");
+		
+		//userDetails.setAddress("C-104 block 15 Gulistane Johar");
+		Address add = new Address();
+		add.setCity("Karachi");
+		add.setStreet("Gulistane-e-Johar");
+		userDetails.setAddress(add);
 		userDetails.setDescription("Hello World. Nice Description");
 		userDetails.setJoindate(new Date());
 		

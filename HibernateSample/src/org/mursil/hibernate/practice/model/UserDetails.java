@@ -3,6 +3,7 @@ package org.mursil.hibernate.practice.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,24 +24,31 @@ public class UserDetails {
 	private String userName;
 	@Temporal( TemporalType.DATE)
 	private Date joindate;
-	@Transient
-	private String address;
-   // @Lob
+	//@Transient
+	//private String address;
+    //@Lob
 	private String description;
-	
+	@Embedded
+	private Address address;
 	
 	public Date getJoindate() {
 		return joindate;
 	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 	public void setJoindate(Date joindate) {
 		this.joindate = joindate;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+//	public String getAddress() {
+//		return address;
+//	}
+//	public void setAddress(String address) {
+//		this.address = address;
+//	}
 	public String getDescription() {
 		return description;
 	}
