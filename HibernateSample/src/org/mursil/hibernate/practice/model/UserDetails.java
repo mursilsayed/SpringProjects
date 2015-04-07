@@ -1,8 +1,11 @@
 package org.mursil.hibernate.practice.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +17,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity //(name="user_details")
-@Table (name="user_details")
+//@Table (name="user_details")
 public class UserDetails {
 
 	@Id
@@ -26,29 +29,50 @@ public class UserDetails {
 	private Date joindate;
 	//@Transient
 	//private String address;
-    //@Lob
+
+//	public String getAddress() {
+//	return address;
+//}
+//public void setAddress(String address) {
+//	this.address = address;
+//}
+
+	//@Lob
 	private String description;
-	@Embedded
-	private Address address;
+	//@Embedded
+	//private Address address;
+
+//	public Address getAddress() {
+//		return address;
+//	}
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 	
+	
+	@ElementCollection
+	private Set<Address> addressList = new HashSet();
+
+	
+	
+	public Set<Address> getAddressList() {
+		return addressList;
+	}
+
+
+	public void setAddressList(Set<Address> addressList) {
+		this.addressList = addressList;
+	}
+
+
 	public Date getJoindate() {
 		return joindate;
 	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+	
+	
 	public void setJoindate(Date joindate) {
 		this.joindate = joindate;
 	}
-//	public String getAddress() {
-//		return address;
-//	}
-//	public void setAddress(String address) {
-//		this.address = address;
-//	}
 	public String getDescription() {
 		return description;
 	}

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -37,13 +39,22 @@ public class DemoApp {
 		UserDetails userDetails = new UserDetails();
 		//userDetails.setUserid(1);
 		
-		userDetails.setUserName("Mursil");
 		
 		//userDetails.setAddress("C-104 block 15 Gulistane Johar");
 		Address add = new Address();
 		add.setCity("Karachi");
 		add.setStreet("Gulistane-e-Johar");
-		userDetails.setAddress(add);
+		
+		Address add2 = new Address();
+		add2.setCity("Karachi");
+		add2.setStreet("Gulistane-e-Johar");
+		Set<Address> list = new HashSet();
+		list.add(add);
+		list.add(add2);
+		
+		
+		userDetails.setUserName("Mursil");
+		userDetails.setAddressList(list);
 		userDetails.setDescription("Hello World. Nice Description");
 		userDetails.setJoindate(new Date());
 		
