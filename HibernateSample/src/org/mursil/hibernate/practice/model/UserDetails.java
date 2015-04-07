@@ -8,8 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -50,7 +52,8 @@ public class UserDetails {
 //	}
 	
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
+	@JoinTable (name="User_Address")
 	private Set<Address> addressList = new HashSet();
 
 	
