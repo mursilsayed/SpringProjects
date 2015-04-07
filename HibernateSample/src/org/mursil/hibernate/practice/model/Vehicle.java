@@ -4,14 +4,18 @@ package org.mursil.hibernate.practice.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="vehicle_type")
+@DiscriminatorValue(value="vehicle")
 public class Vehicle {
 
 	@Id
@@ -20,25 +24,12 @@ public class Vehicle {
 	
 	private String name;
 	
-//	@ManyToOne
-//	@JoinColumn(name ="USER_ID")
-	//private UserDetails user;
-	
-//	public UserDetails getUser() {
-//		return user;
-//	}
-//	public void setUser(UserDetails user) {
-//		this.user = user;
-//	}
-	@ManyToMany(mappedBy="vehicles")
-	private Collection<UserDetails> users=new ArrayList();
-
-	
-	public Collection<UserDetails> getUsers() {
-		return users;
+	public Vehicle(){
+		
 	}
-	public void setUsers(Collection<UserDetails> users) {
-		this.users = users;
+	public Vehicle(String name){
+		this.name= name;
+		
 	}
 	public int getId() {
 		return Id;
