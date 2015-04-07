@@ -23,9 +23,9 @@ public class DemoApp {
 
 		System.out.println("Hello World from Hibernate Inheritance Implementation");
 	
-		Vehicle v= new Vehicle("Car");
-		TwoWheeler two=new TwoWheeler("Yamaha");
-		FourWheeler four = new FourWheeler("Honda");
+		Vehicle v= new Vehicle("Car",1);
+		TwoWheeler two=new TwoWheeler("Yamaha",2);
+		FourWheeler four = new FourWheeler("Honda",3);
 		
 		
 		@SuppressWarnings("deprecation")

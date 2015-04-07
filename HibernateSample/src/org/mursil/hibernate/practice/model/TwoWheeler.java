@@ -10,8 +10,8 @@ public class TwoWheeler extends Vehicle {
 	private String SteeringHandle="Default Handle";
 	
 	public TwoWheeler(){}
-	public TwoWheeler(String name){
-		super(name);
+	public TwoWheeler(String name,int id){
+		super(name,id);
 		
 	}
 

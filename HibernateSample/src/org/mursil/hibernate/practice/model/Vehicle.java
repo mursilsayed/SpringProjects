@@ -13,13 +13,13 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 //@DiscriminatorColumn(name="vehicle_type")
 //@DiscriminatorValue(value="vehicle")
 public class Vehicle {
 
 	@Id
-	@GeneratedValue
+	//@GeneratedValue
 	private int Id;
 	
 	private String name;
@@ -27,8 +27,9 @@ public class Vehicle {
 	public Vehicle(){
 		
 	}
-	public Vehicle(String name){
+	public Vehicle(String name,int id){
 		this.name= name;
+		this.Id=id;
 		
 	}
 	public int getId() {

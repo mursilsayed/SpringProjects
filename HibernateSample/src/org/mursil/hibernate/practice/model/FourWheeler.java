@@ -10,8 +10,8 @@ public class FourWheeler extends Vehicle {
 	private String steeringWheel="Default Wheel";
 
 	public FourWheeler(){}
-	public FourWheeler(String name){
-		super(name);
+	public FourWheeler(String name,int id){
+		super(name,id);
 		
 	}
 
