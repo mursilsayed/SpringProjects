@@ -73,9 +73,9 @@ public class DemoApp {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
-		session.save(userDetails);
-		session.save(vehicle);
-		session.save(vehicle2);
+		session.persist(userDetails);
+		//session.save(vehicle);
+		//session.save(vehicle2);
 		session.getTransaction().commit();
 		session.close();
 		

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
@@ -61,7 +62,7 @@ public class UserDetails {
 	@JoinTable (name="User_Address")
 	private Set<Address> addressList = new HashSet();
 
-	@OneToMany(mappedBy="user")
+	@OneToMany(/*mappedBy="user",*/cascade=CascadeType.ALL)
 //	@JoinTable(name="user_vehicle",joinColumns=@JoinColumn(name="user_id"),
 //		inverseJoinColumns=@JoinColumn(name="vehicle_id"))
 	private Collection<Vehicle> vehicles = new ArrayList();

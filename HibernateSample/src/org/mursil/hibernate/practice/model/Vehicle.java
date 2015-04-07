@@ -16,16 +16,16 @@ public class Vehicle {
 	
 	private String name;
 	
-	@ManyToOne
-	@JoinColumn(name ="USER_ID")
-	private UserDetails user;
+//	@ManyToOne
+//	@JoinColumn(name ="USER_ID")
+	//private UserDetails user;
 	
-	public UserDetails getUser() {
-		return user;
-	}
-	public void setUser(UserDetails user) {
-		this.user = user;
-	}
+//	public UserDetails getUser() {
+//		return user;
+//	}
+//	public void setUser(UserDetails user) {
+//		this.user = user;
+//	}
 	public int getId() {
 		return Id;
 	}
