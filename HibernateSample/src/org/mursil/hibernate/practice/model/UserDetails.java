@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -62,9 +63,10 @@ public class UserDetails {
 	@JoinTable (name="User_Address")
 	private Set<Address> addressList = new HashSet();
 
-	@OneToMany(/*mappedBy="user",*/cascade=CascadeType.ALL)
+	//@OneToMany(/*mappedBy="user",*/cascade=CascadeType.ALL)
 //	@JoinTable(name="user_vehicle",joinColumns=@JoinColumn(name="user_id"),
 //		inverseJoinColumns=@JoinColumn(name="vehicle_id"))
+	@ManyToMany
 	private Collection<Vehicle> vehicles = new ArrayList();
 	
 	

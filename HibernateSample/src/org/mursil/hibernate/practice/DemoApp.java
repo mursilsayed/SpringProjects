@@ -61,6 +61,9 @@ public class DemoApp {
 		
 		userDetails.getVehicles().add(vehicle);
 		userDetails.getVehicles().add(vehicle2);
+		vehicle.getUsers().add(userDetails);
+		vehicle2.getUsers().add(userDetails);
+		
 		
 		userDetails.setUserName("Mursil");
 		userDetails.setAddressList(list);
@@ -73,9 +76,9 @@ public class DemoApp {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
-		session.persist(userDetails);
-		//session.save(vehicle);
-		//session.save(vehicle2);
+		session.save(userDetails);
+		session.save(vehicle);
+		session.save(vehicle2);
 		session.getTransaction().commit();
 		session.close();
 		
