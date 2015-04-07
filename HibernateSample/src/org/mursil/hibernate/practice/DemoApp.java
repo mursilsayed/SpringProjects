@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.mursil.hibernate.practice.model.Address;
 import org.mursil.hibernate.practice.model.UserDetails;
+import org.mursil.hibernate.practice.model.Vehicle;
 import org.mariadb.jdbc.MySQLConnection;
 
 public class DemoApp {
@@ -52,7 +53,10 @@ public class DemoApp {
 		list.add(add);
 		list.add(add2);
 		
+		Vehicle vehicle = new Vehicle();
+		vehicle.setName("Cultus");
 		
+		userDetails.setVehicle(vehicle);
 		userDetails.setUserName("Mursil");
 		userDetails.setAddressList(list);
 		userDetails.setDescription("Hello World. Nice Description");
@@ -65,11 +69,13 @@ public class DemoApp {
 		session.beginTransaction();
 		
 		session.save(userDetails);
+		session.save(vehicle);
 		session.getTransaction().commit();
-		//session.close();
+		session.close();
 		
 		
 		//Reading the User Detail from Table
+		session = sessionFactory.openSession();
 		UserDetails user ;
 		//session = sessionFactory.openSession();
 		user = (UserDetails)session.get(UserDetails.class, 1);

@@ -19,5 +19,7 @@
         
         <!-- Names of the Entity Classes -->
         <mapping class="org.mursil.hibernate.practice.model.UserDetails"/>
+        <mapping class="org.mursil.hibernate.practice.model.Vehicle"/>
+        
     </session-factory>
 </hibernate-configuration>

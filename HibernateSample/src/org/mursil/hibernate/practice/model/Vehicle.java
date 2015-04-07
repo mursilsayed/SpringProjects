@@ -1,12 +1,17 @@
 package org.mursil.hibernate.practice.model;
 
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class Vehicle {
 
-public class Circle {
-
-	
+	@Id
+	@GeneratedValue
 	private int Id;
+	
 	private String name;
 	
 	
