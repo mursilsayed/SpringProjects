@@ -13,9 +13,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="vehicle_type")
-@DiscriminatorValue(value="vehicle")
+@Inheritance(strategy=InheritanceType.JOINED)
+//@DiscriminatorColumn(name="vehicle_type")
+//@DiscriminatorValue(value="vehicle")
 public class Vehicle {
 
 	@Id

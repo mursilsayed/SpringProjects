@@ -1,10 +1,10 @@
 package org.mursil.hibernate.practice.model;
 
-import javax.persistence.DiscriminatorValue;
+
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue(value="Bike")
+//@DiscriminatorValue(value="Bike")
 public class TwoWheeler extends Vehicle {
 
 	private String SteeringHandle="Default Handle";

@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue(value="Car")
+//@DiscriminatorValue(value="Car")
 public class FourWheeler extends Vehicle {
 
 	private String steeringWheel="Default Wheel";
