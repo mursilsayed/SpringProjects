@@ -61,9 +61,9 @@ public class UserDetails {
 	@JoinTable (name="User_Address")
 	private Set<Address> addressList = new HashSet();
 
-	@OneToMany
-	@JoinTable(name="user_vehicle",joinColumns=@JoinColumn(name="user_id"),
-		inverseJoinColumns=@JoinColumn(name="vehicle_id"))
+	@OneToMany(mappedBy="user")
+//	@JoinTable(name="user_vehicle",joinColumns=@JoinColumn(name="user_id"),
+//		inverseJoinColumns=@JoinColumn(name="vehicle_id"))
 	private Collection<Vehicle> vehicles = new ArrayList();
 	
 	
