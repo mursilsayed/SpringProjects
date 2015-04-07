@@ -55,8 +55,13 @@ public class DemoApp {
 		
 		Vehicle vehicle = new Vehicle();
 		vehicle.setName("Cultus");
+		Vehicle vehicle2 = new Vehicle();
+		vehicle2.setName("Honda");
 		
-		userDetails.setVehicle(vehicle);
+		
+		userDetails.getVehicles().add(vehicle);
+		userDetails.getVehicles().add(vehicle2);
+		
 		userDetails.setUserName("Mursil");
 		userDetails.setAddressList(list);
 		userDetails.setDescription("Hello World. Nice Description");
@@ -70,6 +75,7 @@ public class DemoApp {
 		
 		session.save(userDetails);
 		session.save(vehicle);
+		session.save(vehicle2);
 		session.getTransaction().commit();
 		session.close();
 		
@@ -80,6 +86,8 @@ public class DemoApp {
 		//session = sessionFactory.openSession();
 		user = (UserDetails)session.get(UserDetails.class, 1);
 		System.out.println("User name="+user.getUserName()+"\n UserID="+user.getUserid());
+		System.out.println("User's Vehicle count="+user.getVehicles().size());
+		
 		session.close();
 		
 	}

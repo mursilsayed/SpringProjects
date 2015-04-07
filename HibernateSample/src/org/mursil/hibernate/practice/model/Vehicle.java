@@ -4,6 +4,7 @@ package org.mursil.hibernate.practice.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Vehicle {
@@ -14,7 +15,15 @@ public class Vehicle {
 	
 	private String name;
 	
+	@ManyToOne
+	private UserDetails user;
 	
+	public UserDetails getUser() {
+		return user;
+	}
+	public void setUser(UserDetails user) {
+		this.user = user;
+	}
 	public int getId() {
 		return Id;
 	}

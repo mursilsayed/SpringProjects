@@ -1,5 +1,7 @@
 package org.mursil.hibernate.practice.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -54,22 +57,25 @@ public class UserDetails {
 //	}
 	
 	
-	@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection//(fetch=FetchType.EAGER)
 	@JoinTable (name="User_Address")
 	private Set<Address> addressList = new HashSet();
 
-	@OneToOne
-	@JoinColumn(name="vehicle_id")
-	private Vehicle vehicle;
+	@OneToMany
+	@JoinTable(name="user_vehicle",joinColumns=@JoinColumn(name="user_id"),
+		inverseJoinColumns=@JoinColumn(name="vehicle_id"))
+	private Collection<Vehicle> vehicles = new ArrayList();
 	
 	
-	public Vehicle getVehicle() {
-		return vehicle;
+	
+
+	public Collection<Vehicle> getVehicles() {
+		return vehicles;
 	}
 
 
-	public void setVehicle(Vehicle vehicle) {
-		this.vehicle = vehicle;
+	public void setVehicles(Collection<Vehicle> vehicles) {
+		this.vehicles = vehicles;
 	}
 
 
