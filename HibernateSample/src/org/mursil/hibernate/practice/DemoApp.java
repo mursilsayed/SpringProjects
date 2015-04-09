@@ -31,26 +31,17 @@ public class DemoApp {
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-//		
-//		session.save(userDetails);
-//		int i=0;
-//		for(;i<10;i++)
-//		{
-//			
-//			UserDetails user = new UserDetails();
-//			user.setUserName("Mursil"+i);
-//			user.setDescription("Hello World. Nice Description");
-//			user.setJoindate(new Date());
-//			session.save(user);
-//		}
-//		
-//		session.getTransaction().commit();
-//		session.close();
-//		
-//		
-		Query query = (Query) session.createQuery("select userName from UserDetails");
-		query.setFirstResult(4);
-		query.setMaxResults(5);
+
+		
+//		Query query = (Query) session.createQuery("select userName from UserDetails where userid> ? and userName= ?");
+//		query.setInteger(0, 5);
+//		query.setString(1, "Mursil Sayed");
+		
+		
+		Query query = (Query) session.createQuery("select userName from UserDetails where userid> :userid and userName= :userName");
+		query.setInteger("userid", 5);
+		query.setString("userName", "Mursil Sayed");
+		
 		List<String> result = (List<String>)query.list();
 		for(String user:result)
 		{
@@ -60,17 +51,7 @@ public class DemoApp {
 		
 		
 		
-		//Using Aggregate Functions with HQL
-		query = (Query) session.createQuery("select max(userid) from UserDetails");
 		
-		List<Integer> result2 = (List<Integer>)query.list();
-		for(Integer user:result2)
-		{
-			System.out.println("Maximum User ID = "+user);
-			
-		}
-		
-		//System.out.println("User name="+userDetails2.getUserName()+"\n UserID="+userDetails2.getUserid());
 		session.getTransaction().commit();
 		session.close();
 		
