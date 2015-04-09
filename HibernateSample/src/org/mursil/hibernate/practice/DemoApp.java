@@ -48,13 +48,16 @@ public class DemoApp {
 //		session.close();
 //		
 //		
-//		//Reading the User Detail from Table
-//		session = sessionFactory.openSession();
-		UserDetails userDetails2 ;
-		//session = sessionFactory.openSession();
-		Query query = (Query) session.createQuery("from UserDetails where userid>5");
-		List result = query.list();
-		System.out.println("Count of Users = "+result.size());
+		Query query = (Query) session.createQuery("from UserDetails");
+		query.setFirstResult(4);
+		query.setMaxResults(5);
+		List<UserDetails> result = (List<UserDetails>)query.list();
+		for(UserDetails user:result)
+		{
+			System.out.println("User Name = "+user.getUserName());
+			
+		}
+		
 		
 		//System.out.println("User name="+userDetails2.getUserName()+"\n UserID="+userDetails2.getUserid());
 		session.getTransaction().commit();
