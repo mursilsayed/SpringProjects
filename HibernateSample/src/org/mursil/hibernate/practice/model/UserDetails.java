@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,7 +27,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity //(name="user_details")
-//@Table (name="user_details")
+@NamedQuery(name = "UserDetails.byidandname", query = "select userName from UserDetails where userid> :id ")
 public class UserDetails {
 
 	@Id

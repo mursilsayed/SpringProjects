@@ -33,23 +33,17 @@ public class DemoApp {
 		session.beginTransaction();
 
 		
-//		Query query = (Query) session.createQuery("select userName from UserDetails where userid> ? and userName= ?");
-//		query.setInteger(0, 5);
-//		query.setString(1, "Mursil Sayed");
+     	Query query = session.getNamedQuery("UserDetails.byidandname");
+    	query.setInteger("id", 5);
 		
-		
-		Query query = (Query) session.createQuery("select userName from UserDetails where userid> :userid and userName= :userName");
-		query.setInteger("userid", 5);
-		query.setString("userName", "Mursil Sayed");
+
 		
 		List<String> result = (List<String>)query.list();
 		for(String user:result)
 		{
-			System.out.println("User Name = "+user);
+			System.out.println("User Name = " +user);
 			
 		}
-		
-		
 		
 		
 		session.getTransaction().commit();
