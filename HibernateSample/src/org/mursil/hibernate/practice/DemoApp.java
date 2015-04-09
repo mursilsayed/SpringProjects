@@ -48,13 +48,13 @@ public class DemoApp {
 //		session.close();
 //		
 //		
-		Query query = (Query) session.createQuery("from UserDetails");
+		Query query = (Query) session.createQuery("select userName from UserDetails");
 		query.setFirstResult(4);
 		query.setMaxResults(5);
-		List<UserDetails> result = (List<UserDetails>)query.list();
-		for(UserDetails user:result)
+		List<String> result = (List<String>)query.list();
+		for(String user:result)
 		{
-			System.out.println("User Name = "+user.getUserName());
+			System.out.println("User Name = "+user);
 			
 		}
 		
