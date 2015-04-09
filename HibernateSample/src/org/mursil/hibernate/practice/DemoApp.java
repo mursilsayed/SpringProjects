@@ -59,6 +59,17 @@ public class DemoApp {
 		}
 		
 		
+		
+		//Using Aggregate Functions with HQL
+		query = (Query) session.createQuery("select max(userid) from UserDetails");
+		
+		List<Integer> result2 = (List<Integer>)query.list();
+		for(Integer user:result2)
+		{
+			System.out.println("Maximum User ID = "+user);
+			
+		}
+		
 		//System.out.println("User name="+userDetails2.getUserName()+"\n UserID="+userDetails2.getUserid());
 		session.getTransaction().commit();
 		session.close();
