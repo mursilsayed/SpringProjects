@@ -30,16 +30,16 @@ public class Vehicle {
 //	public void setUser(UserDetails user) {
 //		this.user = user;
 //	}
-	@ManyToMany(mappedBy="vehicles")
-	private Collection<UserDetails> users=new ArrayList();
-
-	
-	public Collection<UserDetails> getUsers() {
-		return users;
-	}
-	public void setUsers(Collection<UserDetails> users) {
-		this.users = users;
-	}
+//	@ManyToMany(mappedBy="vehicles")
+//	private Collection<UserDetails> users=new ArrayList();
+//
+//	
+//	public Collection<UserDetails> getUsers() {
+//		return users;
+//	}
+//	public void setUsers(Collection<UserDetails> users) {
+//		this.users = users;
+//	}
 	public int getId() {
 		return Id;
 	}

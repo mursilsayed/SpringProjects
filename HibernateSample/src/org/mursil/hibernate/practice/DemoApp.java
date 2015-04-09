@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -20,77 +22,42 @@ public class DemoApp {
 	public static void main(String[] args) {
 
 		System.out.println("Hello World from Hibernate");
-		//Basic JDBC code testing the database connectivity
+	
 		
-//		try{
-//			
-//            Class.forName("org.mariadb.jdbc.Driver").newInstance();
-//			Connection  connection = (Connection)DriverManager.getConnection("jdbc:mariadb://192.168.59.103:3306/hibernatedb", "Mursil", "sam200");
-//			Statement stmt = (Statement)connection.createStatement();
-//			stmt.execute("Insert into a values(1,'Mursil') ");
-//			stmt.close();
-//			connection.close();
-//			
-//		}catch(Exception e)
-//		{
-//			System.out.println("Exception Occured: e= "+e.toString());
-//			
-//		}
-		
-		UserDetails userDetails = new UserDetails();
-		//userDetails.setUserid(1);
-		
-		
-		//userDetails.setAddress("C-104 block 15 Gulistane Johar");
-		Address add = new Address();
-		add.setCity("Karachi");
-		add.setStreet("Gulistane-e-Johar");
-		
-		Address add2 = new Address();
-		add2.setCity("Karachi");
-		add2.setStreet("Gulistane-e-Johar");
-		Set<Address> list = new HashSet();
-		list.add(add);
-		list.add(add2);
-		
-		Vehicle vehicle = new Vehicle();
-		vehicle.setName("Cultus");
-		Vehicle vehicle2 = new Vehicle();
-		vehicle2.setName("Honda");
-		
-		
-		userDetails.getVehicles().add(vehicle);
-		userDetails.getVehicles().add(vehicle2);
-		vehicle.getUsers().add(userDetails);
-		vehicle2.getUsers().add(userDetails);
-		
-		
-		userDetails.setUserName("Mursil");
-		userDetails.setAddressList(list);
-		userDetails.setDescription("Hello World. Nice Description");
-		userDetails.setJoindate(new Date());
-		
+	
+	
 		
 		@SuppressWarnings("deprecation")
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		
-		session.save(userDetails);
-		session.save(vehicle);
-		session.save(vehicle2);
-		session.getTransaction().commit();
-		session.close();
-		
-		
-		//Reading the User Detail from Table
-		session = sessionFactory.openSession();
-		UserDetails user ;
+//		
+//		session.save(userDetails);
+//		int i=0;
+//		for(;i<10;i++)
+//		{
+//			
+//			UserDetails user = new UserDetails();
+//			user.setUserName("Mursil"+i);
+//			user.setDescription("Hello World. Nice Description");
+//			user.setJoindate(new Date());
+//			session.save(user);
+//		}
+//		
+//		session.getTransaction().commit();
+//		session.close();
+//		
+//		
+//		//Reading the User Detail from Table
+//		session = sessionFactory.openSession();
+		UserDetails userDetails2 ;
 		//session = sessionFactory.openSession();
-		user = (UserDetails)session.get(UserDetails.class, 1);
-		System.out.println("User name="+user.getUserName()+"\n UserID="+user.getUserid());
-		System.out.println("User's Vehicle count="+user.getVehicles().size());
+		Query query = (Query) session.createQuery("from UserDetails where userid>5");
+		List result = query.list();
+		System.out.println("Count of Users = "+result.size());
 		
+		//System.out.println("User name="+userDetails2.getUserName()+"\n UserID="+userDetails2.getUserid());
+		session.getTransaction().commit();
 		session.close();
 		
 	}

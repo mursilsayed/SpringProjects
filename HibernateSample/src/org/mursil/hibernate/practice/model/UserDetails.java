@@ -59,37 +59,37 @@ public class UserDetails {
 //	}
 	
 	
-	@ElementCollection//(fetch=FetchType.EAGER)
-	@JoinTable (name="User_Address")
-	private Set<Address> addressList = new HashSet();
-
-	//@OneToMany(/*mappedBy="user",*/cascade=CascadeType.ALL)
-//	@JoinTable(name="user_vehicle",joinColumns=@JoinColumn(name="user_id"),
-//		inverseJoinColumns=@JoinColumn(name="vehicle_id"))
-	@ManyToMany
-	private Collection<Vehicle> vehicles = new ArrayList();
-	
-	
-	
-
-	public Collection<Vehicle> getVehicles() {
-		return vehicles;
-	}
-
-
-	public void setVehicles(Collection<Vehicle> vehicles) {
-		this.vehicles = vehicles;
-	}
-
-
-	public Set<Address> getAddressList() {
-		return addressList;
-	}
-
-
-	public void setAddressList(Set<Address> addressList) {
-		this.addressList = addressList;
-	}
+//	@ElementCollection//(fetch=FetchType.EAGER)
+//	@JoinTable (name="User_Address")
+//	private Set<Address> addressList = new HashSet();
+//
+//	//@OneToMany(/*mappedBy="user",*/cascade=CascadeType.ALL)
+////	@JoinTable(name="user_vehicle",joinColumns=@JoinColumn(name="user_id"),
+////		inverseJoinColumns=@JoinColumn(name="vehicle_id"))
+//	@ManyToMany
+//	private Collection<Vehicle> vehicles = new ArrayList();
+//	
+//	
+//	
+//
+//	public Collection<Vehicle> getVehicles() {
+//		return vehicles;
+//	}
+//
+//
+//	public void setVehicles(Collection<Vehicle> vehicles) {
+//		this.vehicles = vehicles;
+//	}
+//
+//
+//	public Set<Address> getAddressList() {
+//		return addressList;
+//	}
+//
+//
+//	public void setAddressList(Set<Address> addressList) {
+//		this.addressList = addressList;
+//	}
 
 
 	public Date getJoindate() {
