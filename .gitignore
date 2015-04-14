@@ -2,3 +2,7 @@
 *.class
 bin/
 .settings/
+*.classpath
+.gradle/
+build/
+*gradle-app.setting
