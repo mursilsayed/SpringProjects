@@ -1,6 +1,7 @@
 package com.mursil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
@@ -26,5 +27,16 @@ public class RedisTester {
 		return 	redisTemplate.opsForValue().get(key);
 		
 	}
+	
+	
+	@ManagedOperation
+	@Cacheable("mursil2")
+	public String getComplexValue(){
+		
+		System.out.print("Complex Value Generated");
+		return 	"Complex Value";
+		
+	}
+	
 
 }
