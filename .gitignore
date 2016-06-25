@@ -7,3 +7,7 @@ target/
 SpringRest/.settings
 *.
 .classpath
+SpringRedisJMX/gradle
+SpringRedisJMX/.settings
+SpringRedisJMX/gradlew
+SpringRedisJMX/gradlew.bat
