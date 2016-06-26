@@ -11,3 +11,9 @@ SpringRedisJMX/gradle
 SpringRedisJMX/.settings
 SpringRedisJMX/gradlew
 SpringRedisJMX/gradlew.bat
+SpringSessionRedis/gradle
+SpringSessionRedis/.settings
+SpringRedisPubSub/gradlew
+SpringRedisPubSub/gradlew.bat
+SpringRedisPubSub/gradle
+SpringRedisPubSub/.settings
