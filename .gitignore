@@ -17,3 +17,8 @@ SpringRedisPubSub/gradlew
 SpringRedisPubSub/gradlew.bat
 SpringRedisPubSub/gradle
 SpringRedisPubSub/.settings
+SpringEncryptedDBPassword/.settings
+SpringEncryptedDBPassword/gradle
+SpringEncryptedDBPassword/gradlew
+SpringEncryptedDBPassword/gradlew.bat
+SpringEncryptedDBPassword/jasypt-1.9.2.jar
