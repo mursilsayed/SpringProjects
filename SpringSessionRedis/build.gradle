@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.3.5.RELEASE'
+		springBootVersion = '1.3.7.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -17,8 +17,8 @@ apply plugin: 'war'
 
 
 war {
-	baseName = 'demo'
-	version = '0.0.1-SNAPSHOT'
+	baseName = 'springSessionRedis'
+	version = '1.0'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

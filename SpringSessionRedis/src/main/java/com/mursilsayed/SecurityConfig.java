@@ -43,12 +43,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.httpBasic().and().authorizeRequests().//
-				antMatchers(HttpMethod.POST, "/employees").hasRole("ADMIN").//
-				antMatchers(HttpMethod.POST, "/addEmployee").hasRole("ADMIN").//
-				antMatchers(HttpMethod.PUT, "/employees/**").hasRole("ADMIN").//
-				antMatchers(HttpMethod.PATCH, "/employees/**").hasRole("ADMIN").and().//
-				csrf().disable();
+		http.csrf().disable();
+		
+		http
+			.httpBasic().and()
+			.antMatcher("/emp/**")
+				.authorizeRequests()
+					.anyRequest().hasRole("ADMIN");
+//		
+//		
+//		
+//		http.httpBasic().and().authorizeRequests().//
+//				antMatchers(HttpMethod.POST, "/employees").hasRole("ADMIN").//
+//				antMatchers(HttpMethod.POST, "/addEmployee").hasRole("ADMIN").//
+//				antMatchers(HttpMethod.PUT, "/employees/**").hasRole("ADMIN").//
+//				antMatchers(HttpMethod.PATCH, "/employees/**").hasRole("ADMIN").and().//
+//				csrf().disable();
 	}
 
 
