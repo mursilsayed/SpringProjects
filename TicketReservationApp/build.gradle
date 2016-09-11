@@ -1,0 +1,60 @@
+buildscript {
+	ext {
+		springBootVersion = '1.3.6.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+
+
+war {
+	baseName = 'TicketReservationApp'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-devtools')
+	compile('org.springframework.session:spring-session')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	runtime('mysql:mysql-connector-java')
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+	compile("org.flywaydb:flyway-core")//Flyway database evolution tool
+	compile 'io.jsonwebtoken:jjwt:0.6.0'//For JWT
+	compile "org.mockito:mockito-core:1.10.19"// For Mockito Mocking Framework
+	compile "org.springframework.boot:spring-boot-starter-security"// For Spring Security
+	
+	compile "org.springframework:spring-context"// For loading cache in memory
+	//compile('org.springframework.boot:spring-boot-starter-social-twitter')
+}
+
+
+eclipse {
+	classpath {
+		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+	}
+}
