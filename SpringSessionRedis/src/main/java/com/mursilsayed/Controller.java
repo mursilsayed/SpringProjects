@@ -70,60 +70,6 @@ public class Controller {
 		return uid.toString();
 }
 	
-	/**
-	 * This method displays a greeting message to the caller and displays 
-	 * the method counter along with the UUID that is allocated to the user
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/greetings/getgreeting")
-	HashMap<String,String> getGreetings(HttpSession session){
-		
-		HashMap<String,String> result=new HashMap<String,String>();
-		
-		result.put("greetingMessage","Hello World!");
-		result.put("sessionId", session.getId());
-		result.put("methodCounter", "1");
-		
-		
-		if(session.isNew())
-		{
-			session.setAttribute("methodCounter",1);
-		}
-		else // Session already Present
-		{
-			String greetingName = (String)session.getAttribute("greetingMessage");
-			Integer methodCounter = (Integer)session.getAttribute("methodCounter");
-			
-			if(greetingName!=null)
-				result.put("greetingMessage",greetingName);
-			
-			methodCounter++;
-			result.put("methodCounter", methodCounter.toString());
-			session.setAttribute("methodCounter",methodCounter);
-			
-				
-		}
-		
-		return result;
-		
-	}
 	
-	@RequestMapping(path="/greetings/setgreeting",method=RequestMethod.POST)
-	HashMap<String,String> submitNameForGreeting(@RequestParam(value = "greetingMessage", required = false, defaultValue = "Default Message") String greetingMessage,HttpSession session)
-	{
-		HashMap<String,String> result=new HashMap<String,String>();
-		
-		result.put("greetingMessage",greetingMessage);
-		result.put("sessionId", session.getId());
-		
-		session.setAttribute("greetingMessage", greetingMessage);
-		
-		
-		return result;
-		
-		
-		
-	}
 	
 }
