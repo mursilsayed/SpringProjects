@@ -26,6 +26,14 @@ public class SimpleGreetingController {
 	/**
 	 * This method displays a greeting message to the caller and displays 
 	 * the method counter along with the UUID that is allocated to the user
+	 * 
+	 * Make a test call to this method using the following lines
+	 * 
+	 * curl -i http://localhost:9001/greetings/getgreeting
+	 * 
+	 * curl -i -H "Cookie: SESSION=05c7dbd8-df6a-47c4-aaca-6621fd541dbd" http://localhost:9001/greetings/getgreeting
+	 * 
+	 * 
 	 * @param session
 	 * @return
 	 */
@@ -62,7 +70,17 @@ public class SimpleGreetingController {
 		return result;
 		
 	}
-	
+	/**
+	 * Make a test call to this method using the following lines
+	 * 
+	 * curl -H "Cookie: SESSION=7339db6d-b052-4b9d-a646-09dbc85f5abf" -X POST -d "greetingMessage=Hello Mursil Sayed" http://localhost:9001/greetings/setgreeting
+	 * 
+	 * 
+	 * @param greetingMessage
+	 * 
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(path="/greetings/setgreeting",method=RequestMethod.POST)
 	HashMap<String,String> submitNameForGreeting(@RequestParam(value = "greetingMessage", required = false, defaultValue = "Default Message") String greetingMessage,HttpSession session)
 	{
