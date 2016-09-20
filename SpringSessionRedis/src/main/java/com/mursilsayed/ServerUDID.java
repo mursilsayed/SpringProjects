@@ -5,6 +5,7 @@ package com.mursilsayed;
 
 import java.util.UUID;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,10 +21,20 @@ public class ServerUDID {
 		
 	}
 	
+	@Cacheable("serverDetails")
 	public String getServerID()
 	{
 		
 		return uid.toString();
 	}
+	
+	@Cacheable(cacheNames="serverDetails")
+	public String getServerName(String name)
+	{
+		return uid.toString()+name;
+	}
+	
+	
+	
 
 }
