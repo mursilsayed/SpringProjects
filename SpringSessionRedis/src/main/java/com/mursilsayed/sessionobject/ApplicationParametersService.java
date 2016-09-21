@@ -32,7 +32,6 @@ public class ApplicationParametersService {
 			
 		}
 		
-		@Cacheable("params")
 		@ManagedOperation
 		public String GetParameterValue(String Key)
 		{
