@@ -21,18 +21,21 @@ public class ServerUDID {
 		
 	}
 	
-	@Cacheable("serverDetails")
+	@Cacheable(cacheNames="serverDetails")
 	public String getServerID()
 	{
 		
 		return uid.toString();
 	}
 	
-	@Cacheable(cacheNames="serverDetails")
-	public String getServerName(String name)
-	{
-		return uid.toString()+name;
-	}
+	
+	
+	
+//	@Cacheable(cacheNames="serverDetails")
+//	public String getServerName(String name)
+//	{
+//		return uid.toString()+name;
+//	}
 	
 	
 	
