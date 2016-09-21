@@ -55,7 +55,6 @@ public class SimpleGreetingController {
 		result.put("methodCounter", "1");
 		result.put("serverID", serverID.getServerID());
 		
-		
 		if(session.isNew())
 		{
 			session.setAttribute("methodCounter",1);
@@ -86,7 +85,7 @@ public class SimpleGreetingController {
 		HashMap<String,String> result=new HashMap<String,String>();
 		ApplicationParameters params= paramService.GetParameterValueInString(key);
 		result.put(key, params.getParam_value());
-		result.put("greetingMessage","Hello World!");
+		
 		result.put("sessionId", session.getId());
 		result.put("serverID", serverID.getServerID());
 		return result;
@@ -110,6 +109,9 @@ public class SimpleGreetingController {
 	HashMap<String,String> submitNameForGreeting(@RequestParam(value = "greetingMessage", required = false, defaultValue = "Default Message") String greetingMessage,HttpSession session)
 	{
 		HashMap<String,String> result=new HashMap<String,String>();
+		paramService.SetParameterValueInString("data", "{\"Name\":\"Mursil Sayed\", \"greetingMessage\":"+greetingMessage+"\"}");
+		
+		
 		
 		result.put("greetingMessage",greetingMessage);
 		result.put("sessionId", session.getId());
