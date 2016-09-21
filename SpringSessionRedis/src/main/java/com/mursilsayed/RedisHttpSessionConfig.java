@@ -18,7 +18,12 @@ import org.springframework.session.ExpiringSession;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
-
+/**
+ * @See http://stackoverflow.com/questions/21672245/spring-redistemplate-serialise-multiple-model-classes-into-json-need-to-use-mu
+ * 
+ * @author Mursil
+ *
+ */
 @Configuration
 @EnableRedisHttpSession 
 public class RedisHttpSessionConfig extends CachingConfigurerSupport{
