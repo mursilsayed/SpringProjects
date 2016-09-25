@@ -1,16 +1,19 @@
 package com.mursilsayed;
 
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.session.ExpiringSession;
-import org.springframework.session.data.redis.RedisOperationsSessionRepository;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+
+import com.mursilsayed.sessionobject.ApplicationParameters;
 
 
 /**
@@ -20,44 +23,65 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  *
  */
 @Configuration
-//@EnableRedisHttpSession 
 public class RedisConfig {
-	
-	@Value("${server.session.timeout}")
-    private int maxInactiveIntervalInSeconds;
+
 	
 	
 	@Value("${cacheEvictTimeInSeconds}")
 	int cacheEvictTimeInSeconds;
 	
+//	@Value("${spring.redis.host}")
+//	String redisHost;
+//	
+//	@Value("${spring.redis.port}")
+//	int redisPort;
 	
+	
+	@Autowired
+	private JedisConnectionFactory defaultConnFactory;//Use the default RedisConnection Factory object that will be created by the Spring-Starter-Redis module
 
-///////////////Defining Redis Connection Factory & Default Redis Template<String,String>////////////////////////
-	/**
-	 * @See http://projects.spring.io/spring-data-redis/
-	 * @return
-	 */
-	@Bean
-	public JedisConnectionFactory jedisConnFactory()
+	
+///////////////Defining Jedis Connection Facotry/////////////////////
+
+//	@Bean
+//	private JedisConnectionFactory customizedJedisConnFactory()
+//	{
+//		JedisConnectionFactory connFac = new JedisConnectionFactory();
+//		connFac.setUsePool(true);
+//		connFac.setHostName(redisHost);
+//		connFac.setPort(redisPort);
+//		
+//		System.out.println("redisHost:"+redisHost);
+//		System.out.println("redisPort:"+redisPort);
+//		
+//		return connFac;
+//		
+//	}
+
+	
+	protected JedisConnectionFactory getConnectionFactory()
 	{
-		JedisConnectionFactory factory = new JedisConnectionFactory();
-		factory.setUsePool(true);
-		return factory;
-				
+		return defaultConnFactory;
+		//return customizedJedisConnFactory();
+		
 	}
+	
+///////////////Defining  Default Connection Redis Template<String,String>////////////////////////
 
+	
 	@Bean
 	@Primary
 	public RedisTemplate<String, String> redisTemplate() {
 	
+//		 
 		RedisTemplate<String, String> redisTemplate = new RedisTemplate<String, String>();
-		redisTemplate.setConnectionFactory(jedisConnFactory());
+		redisTemplate.setConnectionFactory(getConnectionFactory());
 		return redisTemplate;
 	}
 	
 
 	
-//////////////////Define the Default Redis Cache Manager ////////////////////////
+//////////////////Define the Default Redis Cache Manager whic works with Default RedisTemplate ////////////////////////
 	/**
 	 * @See http://docs.spring.io/spring-data/data-redis/docs/current/reference/html/#redis:support:cache-abstraction
 	 * @return
@@ -75,105 +99,33 @@ public class RedisConfig {
 	
 	
 
-//	@Bean
-//    public KeyGenerator customKeyGenerator() {
-//	    return new KeyGenerator() {
-//	      @Override
-//	      public Object generate(Object o, Method method, Object... objects) {
-//	        StringBuilder sb = new StringBuilder();
-//	        sb.append(o.getClass().getName());
-//	        sb.append(method.getName());
-//	        for (Object obj : objects) {
-//	          sb.append(obj.toString());
-//	        }
-//	        return sb.toString();
-//	      }
-//	    };
-//	}
 	
 	
 //
 //	
-//	///////////////////////SessionManager for SpringSession////////////////////////
-    @Primary
-    @Bean
-    public RedisOperationsSessionRepository sessionRepository(RedisTemplate<String, ExpiringSession> sessionRedisTemplate) {
-        RedisOperationsSessionRepository sessionRepository = new RedisOperationsSessionRepository(sessionRedisTemplate);
-        sessionRepository.setDefaultMaxInactiveInterval(maxInactiveIntervalInSeconds);
-        return sessionRepository;
+
+//	
+//	///////////////////////Redis Template & Cache Manager for ApplicationParameters////////////////////////
+	@Bean
+	public RedisTemplate<String, ApplicationParameters> redisTemplateApp() {
+    	
+    	RedisTemplate<String, ApplicationParameters> redisTemplate = new RedisTemplate<String, ApplicationParameters>();
+    	redisTemplate.setConnectionFactory(getConnectionFactory());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<ApplicationParameters>(ApplicationParameters.class));
+        
+         return redisTemplate;
     }
-//    
-//
-//    
-//    
-//    
-//	///////////////////////Default Redis Cache Manager ////////////////////////
-//	@Bean
-//	@Primary
-//	public RedisTemplate<String, String> redisTemplate() {
-//	
-//		RedisTemplate<String, String> redisTemplate = new RedisTemplate<String, String>();
-//		redisTemplate.setConnectionFactory(connectionFactory);
-//		return redisTemplate;
-//	}
-//	
-//	@Bean
-//	@Primary
-//	public CacheManager cacheManager() {
-//	
-//		RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate());
-//		// Number of seconds before expiration. Defaults to unlimited (0)
-//		cacheManager.setDefaultExpiration(cacheEvictTimeInSeconds);
-//		return cacheManager;
-//	}
-//	
-//	
-//	
-//	
-//	
-//	///////////////////////Redis Cache Manager for ApplicationParameters////////////////////////
-//	@Bean
-//	public RedisTemplate<String, ApplicationParameters> redisTemplateApp() {
-//    	
-//    	RedisTemplate<String, ApplicationParameters> redisTemplate = new RedisTemplate<String, ApplicationParameters>();
-//    	redisTemplate.setConnectionFactory(connectionFactory);
-//        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<ApplicationParameters>(ApplicationParameters.class));
-//        
-//         return redisTemplate;
-//    }
-//
-//    @Bean
-//    public CacheManager cacheManagerAppProperties() {
-//    	
-//    	RedisCacheManager cacheManager = new RedisCacheManager(redisTemplateApp());
-//
-//      // Number of seconds before expiration. Defaults to unlimited (0)
-//      cacheManager.setDefaultExpiration(cacheEvictTimeInSeconds);
-//      return cacheManager;
-//    }
-//	
-//   
-//    
-//    
-//	
-//
-//	///////////////////////Simple Cache Manager for EventConfiguration////////////////////////
-//	/**
-//	 * @See http://stackoverflow.com/questions/21512791/spring-service-with-cacheable-methods-gets-initialized-without-cache-when-autowi
-//	 * @return
-//	 */
-//	@Bean
-//	public CacheManager cacheManagerSimple() {
-//	
-//		SimpleCacheManager cacheManager = new SimpleCacheManager();
-//		
-//		cacheManager.setCaches(Arrays.asList(
-//                new ConcurrentMapCache("osbmapping")
-//        ));
-//		
-//		
-//		return cacheManager;
-//	
-//	}
+
+    @Bean
+    public RedisCacheManager cacheManagerAppProperties() {
+    	
+    	RedisCacheManager cacheManager = new RedisCacheManager(redisTemplateApp());
+
+      // Number of seconds before expiration. Defaults to unlimited (0)
+      cacheManager.setDefaultExpiration(cacheEvictTimeInSeconds);
+      return cacheManager;
+    }
+    
+    
 	
 }
