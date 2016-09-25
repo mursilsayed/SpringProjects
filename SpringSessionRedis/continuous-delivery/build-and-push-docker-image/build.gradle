@@ -99,6 +99,7 @@ task copyProjectLibFiles(type: Copy) {
     from('../../project-libraries-for-docker-layer/')
     
     into   dockerBuildFilesFolder+"/libs"
+    exclude('**/tomcat*')
    
 
   //  outputs.upToDateWhen { false }// For ensuring that this task always executes
