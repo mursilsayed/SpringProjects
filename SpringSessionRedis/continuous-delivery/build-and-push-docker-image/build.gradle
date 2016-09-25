@@ -1,0 +1,139 @@
+
+
+/*
+Gradle Docker plugin;
+For more details see the link below
+https://github.com/gesellix/gradle-docker-plugin-example
+*/
+
+
+buildscript {
+  repositories {
+    mavenLocal()
+    jcenter()
+//    maven { url 'http://dl.bintray.com/gesellix/docker-utils' }
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+   dependencies {
+    classpath "de.gesellix:docker-client:2016-08-12T20-26-10"
+  }
+
+}
+
+
+//works with Gradle 2.1+, for the old configuration see http://plugins.gradle.org/plugin/de.gesellix.docker
+plugins {
+  id "com.github.ben-manes.versions" version "0.13.0"
+  id "de.gesellix.docker" version "2016-08-12T22-52-40"
+}
+
+
+// plugins {
+//  id "com.github.ben-manes.versions" version "0.11.3"
+//  id "de.gesellix.docker" version "2015-11-04T21-33-37"
+// }
+
+
+
+ext {
+  localDockerHost = "unix:///var/run/docker.sock"
+  
+  //localDockerHost = System.env.DOCKER_HOST
+
+
+  //localDockerHost = 'https://192.168.1.115:2376'
+//  localDockerHost = System.env.DOCKER_HOST
+  //remoteDockerHost = 'https://192.168.99.100:2376'
+}
+
+
+
+  allprojects {
+	  
+	  apply plugin: 'base'
+	  apply plugin: "de.gesellix.docker"
+	
+	  docker {
+		dockerHost = localDockerHost
+		
+	}
+}
+
+
+
+import de.gesellix.gradle.docker.tasks.*
+
+
+ext{ 
+
+//REGISTRY Pointing to repository hoster on InnovationLab.domestic.hbl.com 
+
+  
+  REGISTRY ='innovationlab.domestic.hbl.com:5000'
+  REPOSITORY = 'springsession'  
+  
+  
+}
+
+def dockerContextFolder = 'docker-infrastructure/springsession'
+def dockerBuildFilesFolder = dockerContextFolder +'/files/project-output-files/' 
+
+
+task copyProjectOutputFile(type: Copy) {
+    
+
+    from('../../build/libs/springsession.war') {
+        
+       
+    }
+
+    into  dockerBuildFilesFolder
+
+  //  outputs.upToDateWhen { false }// For ensuring that this task always executes
+}
+
+task copyProjectLibFiles(type: Copy) {
+  
+
+    // Copy all the project-library files
+    from('../../project-libraries-for-docker-layer/')
+    
+    into   dockerBuildFilesFolder+"/libs"
+   
+
+  //  outputs.upToDateWhen { false }// For ensuring that this task always executes
+}
+
+task buildImage(type: DockerBuildTask) {
+
+  dependsOn  copyProjectLibFiles,copyProjectOutputFile
+  def image = REGISTRY+'/'+REPOSITORY
+  println 'Image Name='+image
+  println 'Docker Context Folder='+dockerContextFolder
+  imageName = image
+  
+  buildContextDirectory = file(dockerContextFolder)
+
+}
+
+
+task pushImage(type: DockerPushTask) {
+  dependsOn buildImage
+  repositoryName = REPOSITORY
+  registry = REGISTRY
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

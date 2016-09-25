@@ -1,0 +1,14 @@
+
+springsession:
+  image: innovationlab.domestic.hbl.com:5000/springsession 
+  container_name: springsession
+  ports:
+   - "8888:8080"
+   - "9000:9000"
+  volumes:
+   - ./springsession:/usr/local/tomcat/logs
+  tty: true
+  environment:
+   - SPRING_PROFILES_ACTIVE=test
+   - TZ=Asia/Karachi
+  env_file: .env

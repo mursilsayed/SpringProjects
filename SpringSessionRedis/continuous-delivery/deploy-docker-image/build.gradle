@@ -1,0 +1,138 @@
+
+
+/*
+Gradle ssh plugin;
+For more details see the link below
+https://gradle-ssh-plugin.github.io/
+*/
+
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'org.hidetake:gradle-ssh-plugin:1.1.3'
+  }
+}
+
+apply plugin: 'org.hidetake.ssh'
+
+
+
+remotes {
+  
+
+  test {
+    host = '10.9.46.126'
+    user = 'hblmobileapp'
+    identity = file('test/id_build_server')
+     knownHosts = allowAnyHosts // Disable host key verification
+  
+  }
+  uat {
+    host = '10.200.75.16'
+    user = 'hblmobileapp'
+    identity = file('uat/id_build_server')
+     knownHosts = allowAnyHosts // Disable host key verification
+  
+  }
+}
+
+
+
+task DeployAppOnTestServer << {
+
+
+  ssh.run {
+    
+     println 'Deploying app on test server'
+     session(remotes.test) {
+          
+          println 'Copying files to remote server'
+          put from: files('test/docker-compose.yml', 'test/.env'), into: '.'
+          
+          def remoteCommand ='docker-compose -f /home/hblmobileapp/docker-compose.yml'
+          println 'Remote Command to be executed:'+remoteCommand
+
+          execute remoteCommand+' stop'
+          execute remoteCommand+' pull'
+          execute remoteCommand+' up --force-recreate -d'
+
+
+        }
+ 
+
+
+
+  }
+}
+
+
+task DeployAppOnUATServer << {
+
+
+  ssh.run {
+    
+     println 'Deploying app on UAT server'
+     session(remotes.uat) {
+          
+          println 'Copying files to remote server'
+          put from: files('uat/docker-compose.yml', 'uat/.env'), into: '.'
+          
+          def remoteCommand ='docker-compose -f /home/hblmobileapp/docker-compose.yml'
+          println 'Remote Command to be executed:'+remoteCommand
+
+          execute remoteCommand+' stop'
+          execute remoteCommand+' pull'
+          execute remoteCommand+' up --force-recreate -d'
+
+
+        }
+ 
+
+
+
+  }
+}
+
+
+task DeployAppOnServer << {
+
+
+  ssh.run {
+ 
+    if( project.hasProperty('DEPLOYMENT_SERVER')){
+
+	     def server
+	     println 'Deploying app on'+DEPLOYMENT_SERVER+ 'Environment'
+	     
+	     if(DEPLOYMENT_SERVER=='test')
+		server=remotes.test
+	     else
+		server=remotes.uat
+
+	     session(server) {
+		  
+		  println 'Copying files to remote server'
+		  put from: files('test/docker-compose.yml', 'test/.env'), into: '.'
+		  
+		  def remoteCommand ='docker-compose -f /home/hblmobileapp/docker-compose.yml'
+		  println 'Remote Command to be executed:'+remoteCommand
+
+		  execute remoteCommand+' stop'
+		  execute remoteCommand+' pull'
+		  execute remoteCommand+' up --force-recreate -d'
+
+
+		}
+	 
+	 }else{
+	
+		println 'ERROR: No Environment Specified'
+	
+	} //end if
+
+	
+
+      }
+}

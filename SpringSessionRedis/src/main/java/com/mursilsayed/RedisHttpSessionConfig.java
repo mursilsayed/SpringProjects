@@ -1,12 +1,15 @@
 package com.mursilsayed;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,6 +21,9 @@ import org.springframework.session.ExpiringSession;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
+
+import com.mursilsayed.sessionobject.ApplicationParameters;
+
 /**
  * @See http://stackoverflow.com/questions/21672245/spring-redistemplate-serialise-multiple-model-classes-into-json-need-to-use-mu
  * 
@@ -33,6 +39,12 @@ public class RedisHttpSessionConfig extends CachingConfigurerSupport{
 	
 	@Autowired
 	RedisConnectionFactory connectionFactory;
+
+	
+	@Value("${cacheEvictTimeInSeconds}")
+	int cacheEvictTimeInSeconds;
+	
+	
 
 	@Bean
 	  public KeyGenerator customKeyGenerator() {
@@ -51,6 +63,9 @@ public class RedisHttpSessionConfig extends CachingConfigurerSupport{
 	}
 	
 	
+	
+	
+	///////////////////////SessionManager for SpringSession////////////////////////
     @Primary
     @Bean
     public RedisOperationsSessionRepository sessionRepository(RedisTemplate<String, ExpiringSession> sessionRedisTemplate) {
@@ -59,22 +74,77 @@ public class RedisHttpSessionConfig extends CachingConfigurerSupport{
         return sessionRepository;
     }
     
-    @Bean
-    @Primary
-    public RedisTemplate<String, Object> redisTemplate() {
-      RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
-      redisTemplate.setConnectionFactory(connectionFactory);
-      redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
-      return redisTemplate;
+
+    
+    
+    
+	///////////////////////Default Redis Cache Manager ////////////////////////
+	@Bean
+	@Primary
+	public RedisTemplate<String, String> redisTemplate() {
+	
+		RedisTemplate<String, String> redisTemplate = new RedisTemplate<String, String>();
+		redisTemplate.setConnectionFactory(connectionFactory);
+		return redisTemplate;
+	}
+	
+	@Bean
+	@Primary
+	public CacheManager cacheManager() {
+	
+		RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate());
+		// Number of seconds before expiration. Defaults to unlimited (0)
+		cacheManager.setDefaultExpiration(cacheEvictTimeInSeconds);
+		return cacheManager;
+	}
+	
+	
+	
+	
+	
+	///////////////////////Redis Cache Manager for ApplicationParameters////////////////////////
+	@Bean
+	public RedisTemplate<String, ApplicationParameters> redisTemplateApp() {
+    	
+    	RedisTemplate<String, ApplicationParameters> redisTemplate = new RedisTemplate<String, ApplicationParameters>();
+    	redisTemplate.setConnectionFactory(connectionFactory);
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<ApplicationParameters>(ApplicationParameters.class));
+        
+         return redisTemplate;
     }
 
     @Bean
-    public CacheManager cacheManager(RedisTemplate<String, Object> redisTemplate) {
-      RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
+    public CacheManager cacheManagerAppProperties() {
+    	
+    	RedisCacheManager cacheManager = new RedisCacheManager(redisTemplateApp());
 
       // Number of seconds before expiration. Defaults to unlimited (0)
-      cacheManager.setDefaultExpiration(300);
+      cacheManager.setDefaultExpiration(cacheEvictTimeInSeconds);
       return cacheManager;
     }
+	
+   
+    
+    
+	
+
+	///////////////////////Simple Cache Manager for EventConfiguration////////////////////////
+	/**
+	 * @See http://stackoverflow.com/questions/21512791/spring-service-with-cacheable-methods-gets-initialized-without-cache-when-autowi
+	 * @return
+	 */
+	@Bean
+	public CacheManager cacheManagerSimple() {
+	
+		SimpleCacheManager cacheManager = new SimpleCacheManager();
+		
+		cacheManager.setCaches(Arrays.asList(
+                new ConcurrentMapCache("osbmapping")
+        ));
+		
+		
+		return cacheManager;
+	
+	}
 	
 }

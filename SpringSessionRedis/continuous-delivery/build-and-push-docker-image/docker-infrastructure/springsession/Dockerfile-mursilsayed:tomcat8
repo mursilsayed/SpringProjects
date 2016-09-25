@@ -1,0 +1,26 @@
+# VERSION 1.0
+# AUTHOR:         Mursil Sayed 
+# DESCRIPTION:    Base Docker image for tomcat8 with jre 8 ,tomcat native library and nano 
+# TO_BUILD:       docker build -t mursilsayed/tomcat8 .
+# TO_RUN:         docker run -it --rm -p 8888:8080 mursilsayed/tomcat8
+
+
+
+# Latest Tomcat base image
+FROM tomcat:8-jre8
+
+
+#See https://github.com/ahromis/tomcat/blob/6fd6fce5892553f17851549cdceb5b2cb3f121f1/8-jre8/Dockerfile
+
+RUN set -x \
+	&& apt-get update \
+	&& apt-get install -yq nano gcc make openssl libssl-dev libapr1 libapr1-dev openjdk-8-jdk="$JAVA_DEBIAN_VERSION" \
+	&& tar zxf /usr/local/tomcat/bin/tomcat-native.tar.gz -C /tmp \
+	&& cd /tmp/tomcat-native*-src/jni/native/ \
+	&& ./configure --with-apr=/usr/bin/apr-1-config --with-java-home=/usr/lib/jvm/java-8-openjdk-amd64/ --with-ssl=yes --libdir=/usr/lib/jni \
+	&& make \
+	&& make install \
+	&& apt-get purge -y openjdk-8-jdk="$JAVA_DEBIAN_VERSION" gcc make libssl-dev libapr1-dev \
+	&& apt-get -y autoremove \
+	&& rm -rf /tmp/tomcat-native* \
+	&& rm -rf /var/lib/apt/lists/*

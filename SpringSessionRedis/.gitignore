@@ -1,0 +1,7 @@
+/.settings/
+/.gradle/
+/bin/
+/build/
+/gradle/
+/project-libraries-for-docker-layer/
+

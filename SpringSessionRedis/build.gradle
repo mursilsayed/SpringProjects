@@ -17,8 +17,8 @@ apply plugin: 'war'
 
 
 war {
-	baseName = 'springSessionRedis'
-	version = '1.0'
+	baseName = 'springsession'
+
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -52,3 +52,28 @@ eclipse {
 		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
 	}
 }
+
+
+/**
+ * Copies all the project dependencies into a directory 
+ * so that a seperate docker layer could be built for these. 
+ * Since these dependencies will be changing infrequently, therefore
+ * they will be kept in a seprate layer so that the size of final 
+ * docker layer remains small. 
+ */
+task exportProjectLibsForDocker(type: Copy) {
+	// into "build/lib"
+	into "project-libraries-for-docker-layer"
+	from configurations.providedCompile
+	from configurations.providedRuntime
+	from configurations.runtime
+	from configurations.compile
+
+
+}
+
+/*The following methods will ensure that the project libraries will be update
+ * upon every build operation
+ * */
+war.dependsOn 'exportProjectLibsForDocker'
+build.dependsOn 'exportProjectLibsForDocker'

@@ -1,0 +1,4 @@
+include ':continuous-delivery'
+include ':continuous-delivery:build-and-push-docker-image'
+include ':continuous-delivery:deploy-docker-image'
+
